@@ -7,6 +7,9 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR is C:\english_hub
 BASE_DIR = PROJECT_DIR.parent
 
+# SECRET_KEY
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
