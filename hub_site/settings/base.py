@@ -10,13 +10,11 @@ BASE_DIR = PROJECT_DIR.parent
 # SECRET_KEY
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-change-in-production')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# Application definition
 INSTALLED_APPS = [
     "home",
     "search",
+    "cloudinary_storage",
+    "cloudinary",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -100,17 +98,11 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC FILES (THE LOGO FIX) ---
+# --- STATIC FILES ---
 STATIC_URL = "/static/"
-
-# 1. This is where you keep your logo (Source)
-# Points to C:\english_hub\hub_site\static
 STATICFILES_DIRS = [
     PROJECT_DIR / "static",
 ]
-
-# 2. This is where Django copies files for the web server (Destination)
-# CHANGED to "static_compiled" to avoid the crash!
 STATIC_ROOT = BASE_DIR / "static_compiled"
 
 # --- MEDIA FILES ---
@@ -119,7 +111,7 @@ MEDIA_URL = "/media/"
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
@@ -140,3 +132,10 @@ WAGTAILSEARCH_BACKENDS = {
 WAGTAILADMIN_BASE_URL = "http://example.com"
 
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+
+# Cloudinary
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
