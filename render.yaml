@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: english-hub
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: gunicorn hub_site.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
