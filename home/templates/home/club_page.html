@@ -1,0 +1,194 @@
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} | Gour Mahavidyalaya</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* --- SAME OFFICIAL STYLING --- */
+        :root {
+            --gm-navy: #002147; 
+            --gm-gold: #FDB913;
+            --bg-body: #f4f6f9;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background-color: var(--bg-body); 
+            margin: 0; 
+            color: var(--text-dark); 
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- FLUID ANIMATIONS --- */
+        @keyframes fadeUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes slideInHeader { 
+            from { opacity: 0; transform: translateX(-30px); } 
+            to { opacity: 1; transform: translateX(0); } 
+        }
+
+        /* HEADER */
+        .official-header {
+            background-color: var(--gm-navy); color: white; padding: 1rem 3%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--gm-gold); position: sticky; top: 0; z-index: 100;
+            animation: slideInHeader 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .brand-wrap { display: flex; align-items: center; gap: 15px; text-decoration: none; color: white; }
+        .brand-wrap img { height: 75px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4)); }
+        .brand-text h1 { margin: 0; font-family: 'Georgia', serif; font-size: 2rem; }
+        .brand-text span { color: var(--gm-gold); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; }
+        
+        .back-btn { border: 1px solid rgba(255,255,255,0.4); color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; text-transform: uppercase; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        .back-btn:hover { background: white; color: var(--gm-navy); transform: translateX(-5px); }
+
+        /* CONTAINER */
+        .container { max-width: 1400px; width: 95%; margin: 40px auto; }
+
+        /* HERO */
+        .club-hero {
+            background: white; border-radius: 12px; border: 1px solid var(--border-light);
+            display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 40px;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; transition: transform 0.8s ease; }
+        .club-hero:hover .hero-img img { transform: scale(1.03); }
+
+        .hero-content { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+        .hero-label { color: var(--gm-navy); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; display: block; }
+        .hero-content h1 { font-family: 'Georgia', serif; font-size: 3rem; color: var(--gm-navy); margin: 0 0 10px 0; line-height: 1.1; }
+        .president-tag { display: inline-block; background: var(--bg-body); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border-light); font-weight: 600; margin-bottom: 25px; width: fit-content;}
+        .club-desc { color: var(--text-muted); font-size: 1.15rem; }
+
+        /* --- FLEXBOX LAYOUT --- */
+        .page-wrapper { display: flex; gap: 40px; align-items: flex-start; }
+        .main-content { flex: 1; min-width: 0; }
+        .sidebar-wrapper { width: 350px; flex-shrink: 0; animation: fadeUp 1s ease-out 0.2s backwards; }
+
+        /* FEED GRID */
+        .section-header { font-family: 'Georgia', serif; font-size: 1.7rem; color: var(--gm-navy); border-bottom: 3px solid var(--gm-gold); padding-bottom: 12px; margin-bottom: 30px; display: inline-block; }
+        
+        /* CLICKABLE POST CARDS */
+        .blog-feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        .post-card { 
+            background: white; border: 1px solid var(--border-light); border-radius: 10px; 
+            display: flex; flex-direction: column; overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
+            text-decoration: none; color: inherit; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: fadeUp 0.8s ease-out backwards;
+        }
+
+        /* Stagger logic for cards */
+        .post-card:nth-child(1) { animation-delay: 0.1s; }
+        .post-card:nth-child(2) { animation-delay: 0.2s; }
+        .post-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .post-card:hover { border-color: var(--gm-gold); transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,33,71,0.1); }
+        .post-card:active { transform: scale(0.97); }
+
+        .post-img { width: 100%; height: 200px; object-fit: cover; transition: 0.5s; }
+        .post-card:hover .post-img { transform: scale(1.05); }
+
+        .post-info { padding: 20px; }
+        .post-info h3 { margin: 0 0 10px 0; color: var(--gm-navy); font-size: 1.3rem; font-family: 'Georgia', serif; transition: color 0.3s; }
+        .post-card:hover h3 { color: var(--gm-gold-hover); }
+
+        /* SIDEBAR WIDGET */
+        .sidebar-widget { background: white; border: 1px solid var(--border-light); padding: 30px; border-radius: 10px; border-top: 5px solid var(--gm-navy); }
+        .sidebar-widget h3 { font-family: 'Georgia', serif; margin-top: 0; color: var(--gm-navy); font-size: 1.4rem; }
+
+        @media (max-width: 900px) {
+            .brand-wrap img { height: 50px; }
+            .brand-text h1 { font-size: 1.4rem; }
+            .club-hero { grid-template-columns: 1fr; }
+            .hero-content { padding: 2rem; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .page-wrapper { flex-direction: column; }
+            .sidebar-wrapper { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="official-header">
+        <a href="/" class="brand-wrap">
+            <img src="{% static 'images/college_logo.png' %}" alt="Gour Mahavidyalaya Emblem">
+            <div class="brand-text">
+                <h1>The English Hub</h1>
+                <span>Gour Mahavidyalaya</span>
+            </div>
+        </a>
+        <a href="/" class="back-btn">← Back</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="club-hero">
+            <div class="hero-content">
+                <span class="hero-label">Departmental Club</span>
+                <h1>{{ page.title }}</h1>
+                <div class="president-tag">President: {{ page.president_name }}</div>
+                <div class="club-desc">{{ page.description|richtext }}</div>
+            </div>
+            <div class="hero-img">
+                {% if page.club_image %}
+                    {% image page.club_image fill-1000x800 %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="page-wrapper">
+            
+            <main class="main-content">
+                <h2 class="section-header">Recent from {{ page.title }}</h2>
+                <div class="blog-feed-grid">
+                    {% for post in club_posts %}
+                        <a href="{{ post.url }}" class="post-card">
+                            {% if post.main_image %}
+                                {% image post.main_image fill-500x350 class="post-img" %}
+                            {% endif %}
+                            <div class="post-info">
+                                <h3>{{ post.title }}</h3>
+                                <p style="color:var(--text-muted); font-size:0.95rem;">{{ post.intro }}</p>
+                                <div style="font-size:0.8rem; font-weight:bold; color:#999; margin-top:10px; text-transform: uppercase;">By {{ post.author }}</div>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <div style="background: white; padding: 40px; border-radius: 8px; border: 1px solid var(--border-light); text-align: center; grid-column: 1 / -1;">
+                            <h3 style="color: var(--gm-navy); font-family: 'Georgia', serif;">No Publications Yet</h3>
+                            <p style="color: var(--text-muted);">Check back soon for updates from the {{ page.title }}.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </main>
+
+            <aside class="sidebar-wrapper">
+                <div class="sidebar-widget">
+                    <h3>About the Club</h3>
+                    <p style="color: var(--text-muted); font-size: 1.05rem;">
+                        This is the official space for the {{ page.title }}. All related critical appreciations, event recaps, and research will be published here.
+                    </p>
+                    <a href="/" style="display: block; text-align: center; background: var(--bg-body); color: var(--gm-navy); padding: 12px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-top: 20px; border: 1px solid var(--border-light); transition: 0.3s;">
+                        Return to Main Feed
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+{% load static wagtailcore_tags wagtailimages_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The English Hub | Gour Mahavidyalaya</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --gm-navy: #002147; 
+            --gm-gold: #FDB913;
+            --gm-gold-hover: #e5a70d;
+            --bg-body: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+            --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background-color: var(--bg-body);
+            margin: 0; color: var(--text-dark); line-height: 1.6;
+            overflow-x: hidden; 
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- FLUID ANIMATIONS --- */
+        @keyframes fadeUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes slideInHeader { 
+            from { opacity: 0; transform: translateX(-30px); } 
+            to { opacity: 1; transform: translateX(0); } 
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- HEADER --- */
+        .official-header {
+            background-color: var(--gm-navy); color: white; padding: 0.8rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 4px solid var(--gm-gold); position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            animation: slideInHeader 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .brand-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+        .brand-wrap img { height: 60px; transition: transform 0.3s; }
+        .brand-text h1 { margin: 0; font-family: 'Georgia', serif; font-size: 1.5rem; line-height: 1; }
+        .brand-text span { color: var(--gm-gold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .login-btn { border: 1px solid rgba(255,255,255,0.4); color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; }
+        .login-btn:hover { background: white; color: var(--gm-navy); }
+
+        /* --- CONTAINER --- */
+        .container { max-width: 1400px; width: 92%; margin: 20px auto; }
+
+        /* --- HERO BANNER (Animated) --- */
+        .hero-banner {
+            background: white; border-radius: 12px; border: 1px solid var(--border-light);
+            display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 30px;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .hero-banner:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,33,71,0.1); border-color: var(--gm-gold); }
+        .hero-banner:active { transform: scale(0.98); }
+
+        .hero-img { overflow: hidden; background: #eee; }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; min-height: 300px; transition: transform 1s ease; }
+        .hero-banner:hover .hero-img img { transform: scale(1.05); }
+
+        .hero-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+        .hero-content h2 { font-family: 'Georgia', serif; font-size: 2.2rem; color: var(--gm-navy); margin: 0 0 15px 0; line-height: 1.2; transition: color 0.3s; }
+        .hero-banner:hover .hero-content h2 { color: var(--gm-gold-hover); }
+        
+        .read-more { 
+            background: var(--gm-gold); color: var(--gm-navy); padding: 12px 25px; border-radius: 50px; 
+            text-decoration: none; font-weight: 800; width: fit-content; text-transform: uppercase; font-size: 0.85rem;
+            transition: 0.3s;
+        }
+
+        /* --- PAGE LAYOUT --- */
+        .page-wrapper { display: flex; gap: 40px; align-items: flex-start; }
+        .main-content { flex: 1; min-width: 0; }
+        .sidebar-wrapper { width: 340px; flex-shrink: 0; animation: fadeUp 1s ease-out 0.2s backwards; }
+        .section-header { font-family: 'Georgia', serif; font-size: 1.5rem; color: var(--gm-navy); border-bottom: 3px solid var(--gm-gold); padding-bottom: 8px; margin-bottom: 25px; display: inline-block; }
+
+        /* --- POST CARDS (Staggered Animation) --- */
+        .blog-feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .post-card { 
+            background: white; border-radius: 12px; border: 1px solid var(--border-light);
+            display: flex; flex-direction: column; overflow: hidden; 
+            text-decoration: none; color: inherit; 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            animation: fadeUp 0.8s ease-out backwards;
+        }
+        
+        .post-card:nth-child(1) { animation-delay: 0.1s; }
+        .post-card:nth-child(2) { animation-delay: 0.2s; }
+        .post-card:nth-child(3) { animation-delay: 0.3s; }
+        .post-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .post-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--gm-gold); }
+        .post-card:active { transform: scale(0.97); }
+
+        .post-img { width: 100%; height: 200px; object-fit: cover; }
+        .post-info { padding: 20px; }
+        .post-info h3 { margin: 0 0 10px 0; color: var(--gm-navy); font-size: 1.25rem; font-family: 'Georgia', serif; line-height: 1.3; }
+
+        /* --- SIDEBAR WIDGETS --- */
+        .insta-btn { background: var(--insta-gradient); color: white; padding: 15px; border-radius: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; margin-bottom: 40px; box-shadow: 0 8px 15px rgba(220, 39, 67, 0.2); transition: 0.3s; }
+        .insta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(220, 39, 67, 0.3); }
+        
+        .club-link { display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; margin-bottom: 12px; text-decoration: none; border-left: 4px solid var(--gm-navy); color: inherit; transition: 0.3s; }
+        .club-link:hover { transform: translateX(5px); border-left-color: var(--gm-gold); background: #fffdf9; }
+        .club-details h4 { margin: 0; color: var(--gm-navy); font-size: 1rem; }
+
+        .notice-card { background: white; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-top: 4px solid var(--gm-gold); transition: 0.3s; cursor: pointer; }
+        .notice-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        /* --- MODAL --- */
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 33, 71, 0.9); backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background-color: white; padding: 30px; border-radius: 12px; width: 85%; max-width: 500px; position: relative; animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .close-modal { position: absolute; top: 10px; right: 20px; font-size: 28px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+        .close-modal:hover { color: var(--gm-navy); transform: rotate(90deg); }
+
+        /* --- MOBILE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .official-header { padding: 0.6rem 4%; }
+            .brand-wrap img { height: 45px; }
+            .brand-text h1 { font-size: 1.2rem; }
+            .hero-banner { grid-template-columns: 1fr; }
+            .hero-img img { min-height: 200px; max-height: 250px; }
+            .page-wrapper { flex-direction: column; gap: 50px; }
+            .sidebar-wrapper { width: 100%; }
+            .blog-feed-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="official-header">
+        <a href="/" class="brand-wrap">
+            <img src="{% static 'images/college_logo.png' %}" alt="Logo">
+            <div class="brand-text">
+                <h1>The English Hub</h1>
+                <span>Gour Mahavidyalaya</span>
+            </div>
+        </a>
+        <a href="/admin/" class="login-btn">Admin</a>
+    </header>
+
+    <div class="container">
+        
+        {% with blog_pages|random as hero_post %}
+            {% if hero_post %}
+            <div class="hero-banner" onclick="window.location.href='{{ hero_post.url }}'">
+                <div class="hero-img">
+                    {% if hero_post.main_image %}
+                        {% image hero_post.main_image fill-900x650 %}
+                    {% endif %}
+                </div>
+                <div class="hero-content">
+                    <span style="color:var(--gm-navy); font-weight:800; text-transform:uppercase; font-size:0.75rem; letter-spacing:1px; margin-bottom:10px; display:block;">Spotlight</span>
+                    <h2>{{ hero_post.title }}</h2>
+                    <p style="color:var(--text-muted); font-size:1rem;">{{ hero_post.intro }}</p>
+                    <span class="read-more">Read Article</span>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="page-wrapper">
+                
+                <main class="main-content">
+                    <h2 class="section-header">Recent Publications</h2>
+                    <div class="blog-feed-grid">
+                        {% for post in blog_pages %}
+                            {% if post.id != hero_post.id %}
+                                <a href="{{ post.url }}" class="post-card">
+                                    {% if post.main_image %}
+                                        {% image post.main_image fill-600x400 class="post-img" %}
+                                    {% endif %}
+                                    <div class="post-info">
+                                        <h3>{{ post.title }}</h3>
+                                        <p style="font-size:0.9rem; color:var(--text-muted);">{{ post.intro|truncatechars:100 }}</p>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% empty %}
+                            <p style="text-align:center; color:var(--text-muted);">Coming soon...</p>
+                        {% endfor %}
+                    </div>
+                </main>
+
+                <aside class="sidebar-wrapper">
+                    <a href="https://www.instagram.com/gm_newgenesis" target="_blank" class="insta-btn">
+                        <i class="ri-instagram-line"></i> Follow @gm_newgenesis
+                    </a>
+
+                    <div style="margin-bottom: 40px;">
+                        <h2 class="section-header">Department Clubs</h2>
+                        <a href="/cine-club/" class="club-link">
+                            <div class="club-details"><h4>Cine Club</h4><small>Samiran Barman</small></div><span>→</span>
+                        </a>
+                        <a href="/quiz-club/" class="club-link">
+                            <div class="club-details"><h4>Quiz Club</h4><small>Md Sami Akmal Ansari</small></div><span>→</span>
+                        </a>
+                        <a href="/reading-club/" class="club-link">
+                            <div class="club-details"><h4>Reading Club</h4><small>Shirin Ebadi</small></div><span>→</span>
+                        </a>
+                        <a href="/debate-club/" class="club-link">
+                            <div class="club-details"><h4>Debate Club</h4><small>Pradipta Poddar</small></div><span>→</span>
+                        </a>
+                        <a href="/beautification-club/" class="club-link">
+                            <div class="club-details"><h4>Beautification Club</h4><small>Poulami Nandi</small></div><span>→</span>
+                        </a>
+                    </div>
+
+                    <div>
+                        <h2 class="section-header">Notice Board</h2>
+                        {% for event in upcoming_events %}
+                            <div class="notice-card" onclick="openModal('{{ event.title|escapejs }}', '{{ event.date_info|escapejs }}', '{{ event.description|escapejs }}', '{{ event.link|escapejs }}')">
+                                <small style="color:var(--gm-navy); font-weight:800; font-size:0.7rem;">{{ event.date_info }}</small>
+                                <h5 style="margin:5px 0; font-size:1.05rem;">{{ event.title }}</h5>
+                                <div style="color:var(--gm-gold); font-size:0.75rem; font-weight:bold;">Details →</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </aside>
+            </div>
+        {% endwith %}
+    </div>
+
+    <div id="noticeModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <span id="modalDate" style="color:var(--gm-gold); font-weight:800; text-transform:uppercase; font-size:0.8rem;"></span>
+            <h2 id="modalTitle" style="color:var(--gm-navy); margin:10px 0; font-family:'Georgia', serif; font-size:1.5rem;"></h2>
+            <p id="modalBody" style="font-size:1rem; margin-bottom:20px;"></p>
+            <a id="modalLink" href="#" target="_blank" style="display:none; background:var(--gm-navy); color:white; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">More Info</a>
+        </div>
+    </div>
+
+    <script>
+        function openModal(title, date, description, link) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDate').innerText = date;
+            document.getElementById('modalBody').innerText = description;
+            var linkBtn = document.getElementById('modalLink');
+            
+            // Checks if the link exists, is not empty, and isn't evaluated as a string "None" by Django
+            if(link && link !== 'None' && link.trim() !== '') { 
+                linkBtn.href = link; 
+                linkBtn.style.display = 'inline-block'; 
+            } else { 
+                linkBtn.style.display = 'none'; 
+            }
+            document.getElementById('noticeModal').style.display = 'flex';
+        }
+        function closeModal() { document.getElementById('noticeModal').style.display = 'none'; }
+        window.onclick = function(e) { if(e.target == document.getElementById('noticeModal')) closeModal(); }
+    </script>
+</body>
+</html>
