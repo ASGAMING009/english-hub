@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import dj_database_url
+import cloudinary
 
 # PROJECT_DIR is C:\english_hub\hub_site
 PROJECT_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +14,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-development-key-chang
 INSTALLED_APPS = [
     "home",
     "search",
-    "cloudinary_storage",
     "cloudinary",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -134,9 +134,8 @@ WAGTAILADMIN_BASE_URL = "http://example.com"
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
 
 # Cloudinary
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+)
