@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "django_filters",
+    "django.contrib.postgres",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
