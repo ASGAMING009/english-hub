@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url
 
 # PROJECT_DIR is C:\english_hub\hub_site
 PROJECT_DIR = Path(__file__).resolve().parent.parent
@@ -69,12 +70,17 @@ TEMPLATES = [
 WSGI_APPLICATION = "hub_site.wsgi.application"
 
 # Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
