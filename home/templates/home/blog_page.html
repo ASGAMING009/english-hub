@@ -8,7 +8,6 @@
     <title>{{ page.title }} | The English Hub</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        /* --- CORE VARIABLES --- */
         :root {
             --gm-navy: #002147; 
             --gm-gold: #FDB913;
@@ -115,7 +114,7 @@
     <article class="article-container">
         {% if page.main_image %}
             <div class="main-image-wrap">
-                <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_1200/{{ page.main_image.file.name }}.jpg" alt="{{ page.main_image.title }}">
+                <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_1200/{{ page.main_image.file.name }}" alt="{{ page.main_image.title }}">
             </div>
         {% endif %}
 

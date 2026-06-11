@@ -27,18 +27,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        @keyframes fadeUp { 
-            from { opacity: 0; transform: translateY(30px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-        @keyframes slideInHeader { 
-            from { opacity: 0; transform: translateX(-30px); } 
-            to { opacity: 1; transform: translateX(0); } 
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInHeader { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
         .official-header {
             background-color: var(--gm-navy); color: white; padding: 0.8rem 5%;
@@ -51,7 +42,6 @@
         .brand-wrap img { height: 60px; transition: transform 0.3s; }
         .brand-text h1 { margin: 0; font-family: 'Georgia', serif; font-size: 1.5rem; line-height: 1; }
         .brand-text span { color: var(--gm-gold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        
         .login-btn { border: 1px solid rgba(255,255,255,0.4); color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-size: 0.8rem; font-weight: 600; transition: 0.3s; }
         .login-btn:hover { background: white; color: var(--gm-navy); }
 
@@ -66,20 +56,13 @@
         }
         .hero-banner:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,33,71,0.1); border-color: var(--gm-gold); }
         .hero-banner:active { transform: scale(0.98); }
-
         .hero-img { overflow: hidden; background: #eee; }
         .hero-img img { width: 100%; height: 100%; object-fit: cover; min-height: 300px; transition: transform 1s ease; }
         .hero-banner:hover .hero-img img { transform: scale(1.05); }
-
         .hero-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
         .hero-content h2 { font-family: 'Georgia', serif; font-size: 2.2rem; color: var(--gm-navy); margin: 0 0 15px 0; line-height: 1.2; transition: color 0.3s; }
         .hero-banner:hover .hero-content h2 { color: var(--gm-gold-hover); }
-        
-        .read-more { 
-            background: var(--gm-gold); color: var(--gm-navy); padding: 12px 25px; border-radius: 50px; 
-            text-decoration: none; font-weight: 800; width: fit-content; text-transform: uppercase; font-size: 0.85rem;
-            transition: 0.3s;
-        }
+        .read-more { background: var(--gm-gold); color: var(--gm-navy); padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 800; width: fit-content; text-transform: uppercase; font-size: 0.85rem; transition: 0.3s; }
 
         .page-wrapper { display: flex; gap: 40px; align-items: flex-start; }
         .main-content { flex: 1; min-width: 0; }
@@ -87,33 +70,22 @@
         .section-header { font-family: 'Georgia', serif; font-size: 1.5rem; color: var(--gm-navy); border-bottom: 3px solid var(--gm-gold); padding-bottom: 8px; margin-bottom: 25px; display: inline-block; }
 
         .blog-feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .post-card { 
-            background: white; border-radius: 12px; border: 1px solid var(--border-light);
-            display: flex; flex-direction: column; overflow: hidden; 
-            text-decoration: none; color: inherit; 
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            animation: fadeUp 0.8s ease-out backwards;
-        }
-        
+        .post-card { background: white; border-radius: 12px; border: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden; text-decoration: none; color: inherit; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); animation: fadeUp 0.8s ease-out backwards; }
         .post-card:nth-child(1) { animation-delay: 0.1s; }
         .post-card:nth-child(2) { animation-delay: 0.2s; }
         .post-card:nth-child(3) { animation-delay: 0.3s; }
         .post-card:nth-child(4) { animation-delay: 0.4s; }
-
         .post-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); border-color: var(--gm-gold); }
         .post-card:active { transform: scale(0.97); }
-
         .post-img { width: 100%; height: 200px; object-fit: cover; }
         .post-info { padding: 20px; }
         .post-info h3 { margin: 0 0 10px 0; color: var(--gm-navy); font-size: 1.25rem; font-family: 'Georgia', serif; line-height: 1.3; }
 
         .insta-btn { background: var(--insta-gradient); color: white; padding: 15px; border-radius: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 700; margin-bottom: 40px; box-shadow: 0 8px 15px rgba(220, 39, 67, 0.2); transition: 0.3s; }
         .insta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 20px rgba(220, 39, 67, 0.3); }
-        
         .club-link { display: flex; justify-content: space-between; align-items: center; background: white; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; margin-bottom: 12px; text-decoration: none; border-left: 4px solid var(--gm-navy); color: inherit; transition: 0.3s; }
         .club-link:hover { transform: translateX(5px); border-left-color: var(--gm-gold); background: #fffdf9; }
         .club-details h4 { margin: 0; color: var(--gm-navy); font-size: 1rem; }
-
         .notice-card { background: white; border: 1px solid var(--border-light); padding: 15px; border-radius: 8px; margin-bottom: 12px; border-top: 4px solid var(--gm-gold); transition: 0.3s; cursor: pointer; }
         .notice-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
@@ -148,13 +120,12 @@
     </header>
 
     <div class="container">
-        
         {% with blog_pages|random as hero_post %}
             {% if hero_post %}
             <div class="hero-banner" onclick="window.location.href='{{ hero_post.url }}'">
                 <div class="hero-img">
                     {% if hero_post.main_image %}
-                        <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_900/{{ hero_post.main_image.file.name }}.jpg" alt="{{ hero_post.main_image.title }}" style="width:100%; height:100%; object-fit:cover; min-height:300px;">
+                        <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_900/{{ hero_post.main_image.file.name }}" alt="{{ hero_post.main_image.title }}" style="width:100%; height:100%; object-fit:cover; min-height:300px;">
                     {% endif %}
                 </div>
                 <div class="hero-content">
@@ -167,7 +138,6 @@
             {% endif %}
 
             <div class="page-wrapper">
-                
                 <main class="main-content">
                     <h2 class="section-header">Recent Publications</h2>
                     <div class="blog-feed-grid">
@@ -175,7 +145,7 @@
                             {% if post.id != hero_post.id %}
                                 <a href="{{ post.url }}" class="post-card">
                                     {% if post.main_image %}
-                                        <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_600/{{ post.main_image.file.name }}.jpg" alt="{{ post.main_image.title }}" class="post-img">
+                                        <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_600/{{ post.main_image.file.name }}" alt="{{ post.main_image.title }}" class="post-img">
                                     {% endif %}
                                     <div class="post-info">
                                         <h3>{{ post.title }}</h3>
