@@ -17,7 +17,6 @@
             --text-dark: #1e293b;
             --text-muted: #64748b;
             --border-light: #e2e8f0;
-            /* Instagram Gradient */
             --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
         }
 
@@ -29,10 +28,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* --- HEADER --- */
         .official-header {
             background-color: var(--gm-navy); color: white; padding: 0.8rem 5%;
             display: flex; justify-content: space-between; align-items: center;
@@ -42,7 +39,6 @@
         .brand-wrap img { height: 45px; }
         .back-link { color: white; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-        /* --- BLOG LAYOUT --- */
         .article-container { 
             max-width: 800px; 
             width: 92%; 
@@ -73,7 +69,6 @@
         .rich-content h2, .rich-content h3 { font-family: 'Georgia', serif; color: var(--gm-navy); margin-top: 40px; border-bottom: 1px solid var(--border-light); padding-bottom: 10px; }
         .rich-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-        /* --- SOCIAL SHARE BUTTONS --- */
         .share-bar {
             margin-top: 50px;
             padding: 25px 0;
@@ -120,7 +115,7 @@
     <article class="article-container">
         {% if page.main_image %}
             <div class="main-image-wrap">
-                {% image page.main_image fill-1200x600 %}
+                <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_1200/{{ page.main_image.file.name }}.jpg" alt="{{ page.main_image.title }}">
             </div>
         {% endif %}
 
