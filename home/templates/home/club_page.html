@@ -8,7 +8,6 @@
     <title>{{ page.title }} | Gour Mahavidyalaya</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        /* --- SAME OFFICIAL STYLING --- */
         :root {
             --gm-navy: #002147; 
             --gm-gold: #FDB913;
@@ -28,7 +27,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- FLUID ANIMATIONS --- */
         @keyframes fadeUp { 
             from { opacity: 0; transform: translateY(30px); } 
             to { opacity: 1; transform: translateY(0); } 
@@ -38,7 +36,6 @@
             to { opacity: 1; transform: translateX(0); } 
         }
 
-        /* HEADER */
         .official-header {
             background-color: var(--gm-navy); color: white; padding: 1rem 3%;
             display: flex; justify-content: space-between; align-items: center;
@@ -53,10 +50,8 @@
         .back-btn { border: 1px solid rgba(255,255,255,0.4); color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; text-transform: uppercase; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
         .back-btn:hover { background: white; color: var(--gm-navy); transform: translateX(-5px); }
 
-        /* CONTAINER */
         .container { max-width: 1400px; width: 95%; margin: 40px auto; }
 
-        /* HERO */
         .club-hero {
             background: white; border-radius: 12px; border: 1px solid var(--border-light);
             display: grid; grid-template-columns: 1.2fr 1fr; overflow: hidden;
@@ -72,15 +67,12 @@
         .president-tag { display: inline-block; background: var(--bg-body); padding: 8px 16px; border-radius: 4px; border: 1px solid var(--border-light); font-weight: 600; margin-bottom: 25px; width: fit-content;}
         .club-desc { color: var(--text-muted); font-size: 1.15rem; }
 
-        /* --- FLEXBOX LAYOUT --- */
         .page-wrapper { display: flex; gap: 40px; align-items: flex-start; }
         .main-content { flex: 1; min-width: 0; }
         .sidebar-wrapper { width: 350px; flex-shrink: 0; animation: fadeUp 1s ease-out 0.2s backwards; }
 
-        /* FEED GRID */
         .section-header { font-family: 'Georgia', serif; font-size: 1.7rem; color: var(--gm-navy); border-bottom: 3px solid var(--gm-gold); padding-bottom: 12px; margin-bottom: 30px; display: inline-block; }
         
-        /* CLICKABLE POST CARDS */
         .blog-feed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         
         .post-card { 
@@ -92,7 +84,6 @@
             animation: fadeUp 0.8s ease-out backwards;
         }
 
-        /* Stagger logic for cards */
         .post-card:nth-child(1) { animation-delay: 0.1s; }
         .post-card:nth-child(2) { animation-delay: 0.2s; }
         .post-card:nth-child(3) { animation-delay: 0.3s; }
@@ -105,9 +96,8 @@
 
         .post-info { padding: 20px; }
         .post-info h3 { margin: 0 0 10px 0; color: var(--gm-navy); font-size: 1.3rem; font-family: 'Georgia', serif; transition: color 0.3s; }
-        .post-card:hover h3 { color: var(--gm-gold-hover); }
+        .post-card:hover h3 { color: var(--gm-gold); }
 
-        /* SIDEBAR WIDGET */
         .sidebar-widget { background: white; border: 1px solid var(--border-light); padding: 30px; border-radius: 10px; border-top: 5px solid var(--gm-navy); }
         .sidebar-widget h3 { font-family: 'Georgia', serif; margin-top: 0; color: var(--gm-navy); font-size: 1.4rem; }
 
@@ -146,7 +136,7 @@
             </div>
             <div class="hero-img">
                 {% if page.club_image %}
-                    {% image page.club_image fill-1000x800 %}
+                    <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_1000/{{ page.club_image.file.name }}.jpg" alt="{{ page.club_image.title }}" style="width:100%; height:100%; object-fit:cover; min-height:400px;">
                 {% endif %}
             </div>
         </div>
@@ -159,7 +149,7 @@
                     {% for post in club_posts %}
                         <a href="{{ post.url }}" class="post-card">
                             {% if post.main_image %}
-                                {% image post.main_image fill-500x350 class="post-img" %}
+                                <img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_500/{{ post.main_image.file.name }}.jpg" alt="{{ post.main_image.title }}" class="post-img">
                             {% endif %}
                             <div class="post-info">
                                 <h3>{{ post.title }}</h3>

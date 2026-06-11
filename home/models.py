@@ -4,16 +4,29 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.snippets.models import register_snippet # Moved to the top
+from wagtail.snippets.models import register_snippet
+from django.utils.safestring import mark_safe
+
+
+# --- CUSTOM CLOUDINARY IMAGE BLOCK ---
+class CloudinaryImageBlock(ImageChooserBlock):
+    def render(self, value, context=None):
+        if not value:
+            return ''
+        return mark_safe(
+            f'<img src="https://res.cloudinary.com/dgbsmllpu/image/upload/q_auto,f_auto,w_1200/{value.file.name}.jpg" '
+            f'alt="{value.title}" style="max-width:100%; height:auto; border-radius:8px; margin:20px 0;">'
+        )
+
 
 # --- 1. HOME PAGE ---
 class HomePage(Page):
     def get_context(self, request):
         context = super().get_context(request)
-        # Pulling both blog posts and the new events snippet
         context['blog_pages'] = BlogPage.objects.live().public().order_by('-first_published_at')
         context['upcoming_events'] = Event.objects.all()
         return context
+
 
 # --- 2. BLOG PAGE ---
 class BlogPage(Page):
@@ -32,7 +45,7 @@ class BlogPage(Page):
     body = StreamField([
         ('heading', blocks.CharBlock(form_classname="title", icon="title")),
         ('paragraph', blocks.RichTextBlock(icon="pilcrow")),
-        ('image', ImageChooserBlock(icon="image")),
+        ('image', CloudinaryImageBlock(icon="image")),
         ('quote', blocks.BlockQuoteBlock(icon="openquote")),
     ], use_json_field=True, blank=True)
 
@@ -43,6 +56,7 @@ class BlogPage(Page):
         FieldPanel('intro'),
         FieldPanel('body'),
     ]
+
 
 # --- 3. CLUB PAGE ---
 class ClubPage(Page):
@@ -68,11 +82,12 @@ class ClubPage(Page):
         context['club_posts'] = BlogPage.objects.live().descendant_of(self)
         return context
 
-# --- 4. SNIPPETS (Managed via Admin) ---
+
+# --- 4. SNIPPETS ---
 @register_snippet
 class Event(models.Model):
     title = models.CharField(max_length=255)
-    date_info = models.CharField(max_length=100, help_text="e.g., Every Wednesday  or Every Friday")
+    date_info = models.CharField(max_length=100, help_text="e.g., Every Wednesday or Every Friday")
     description = models.TextField(blank=True)
     link = models.URLField(blank=True, help_text="Optional link to a page or registration form")
 
